@@ -57,20 +57,8 @@ const Projects = () => {
   return (
     <section id="projects" ref={sectionRef} className="projects-section">
       <div className="projects-container">
-        <h2 className="section-title">Featured Projects</h2>
+        <h2 className="section-title"> Projects</h2>
         <div className="section-divider"></div>
-
-        <div className="filter-buttons">
-          {categories.map((category) => (
-            <button
-              key={category}
-              className={`filter-btn ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
 
         <div className="projects-grid">
           {filteredProjects.map((project, idx) => (

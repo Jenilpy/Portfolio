@@ -46,7 +46,6 @@ const About = () => {
               you can find me exploring new technologies, contributing to open-source, or sharing knowledge with the community.
             </p>
 
-            <button className="cta-button">Download CV</button>
           </div>
         </div>
       </div>

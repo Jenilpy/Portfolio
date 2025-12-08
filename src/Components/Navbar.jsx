@@ -39,15 +39,22 @@ const SparkleNavbar = ({ items, color = '#00fffc' }) => {
     `;
   };
 
+  // Avoid recreating the heavy SVG markup repeatedly — create once and reuse.
+  const svgCreatedRef = useRef(false);
+  const createSVGOnce = (element) => {
+    if (!element || svgCreatedRef.current) return;
+    createSVG(element);
+    svgCreatedRef.current = true;
+  };
+
+  // Use offsetLeft/offsetWidth to avoid forced reflow from getBoundingClientRect
   const getOffsetLeft = (element) => {
-    if (!navRef.current || !activeElementRef.current) return 0;
-    const elementRect = element.getBoundingClientRect();
-    const navRect = navRef.current.getBoundingClientRect();
+    if (!navRef.current || !activeElementRef.current || !element) return 0;
     const activeElementWidth = activeElementRef.current.offsetWidth;
     return (
-      elementRect.left -
-      navRect.left +
-      (elementRect.width - activeElementWidth) / 2
+      element.offsetLeft -
+      navRef.current.offsetLeft +
+      (element.offsetWidth - activeElementWidth) / 2
     );
   };
 
@@ -143,8 +150,9 @@ const SparkleNavbar = ({ items, color = '#00fffc' }) => {
           '--active-element-width': `${spacing > navElement.offsetWidth - 60 ? navElement.offsetWidth - 60 : spacing}px`,
           duration: 0.3,
           ease: 'none',
-          onStart: () => {
-            createSVG(activeElement);
+            onStart: () => {
+            // create the SVG only once (cheap check)
+            createSVGOnce(activeElement);
             gsap.to(activeElement, {
               '--active-element-opacity': 1,
               duration: 0.1,
@@ -168,7 +176,9 @@ const SparkleNavbar = ({ items, color = '#00fffc' }) => {
             });
           },
           onComplete: () => {
-            activeElement.innerHTML = '';
+            // keep the SVG markup for reuse, just clear transient state
+            // but if the SVG was added previously, avoid removing it to prevent reflow
+            if (!svgCreatedRef.current) activeElement.innerHTML = '';
             navElement.classList.remove('before', 'after');
             gsap.set(activeElement, {
               x: getOffsetLeft(newButton),

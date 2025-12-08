@@ -56,6 +56,8 @@
   border-radius: 2px;
   background-color: var(--sparkle-color);
   opacity: var(--active-element-show);
+  will-change: transform, opacity;
+  transform: translate3d(0,0,0);
 }
 
 .navigation-menu .active-element > svg,
@@ -67,6 +69,7 @@
   opacity: var(--active-element-opacity);
   width: var(--active-element-width);
   mix-blend-mode: multiply;
+  will-change: transform, opacity;
 }
 
 .navigation-menu .active-element > svg {
@@ -87,7 +90,7 @@
   overflow: visible;
   height: 12px;
   width: calc(var(--active-element-width) * 2);
-  transform: translate(var(--active-element-strike-x), 30%) scale(var(--active-element-scale-x), var(--active-element-scale-y));
+  transform: translate3d(var(--active-element-strike-x), 30%, 0) scale(var(--active-element-scale-x), var(--active-element-scale-y));
 }
 
 .navigation-menu .active-element .strike svg:last-child {
