@@ -10,6 +10,7 @@ const Contact = () => {
     subject: '',
     message: ''
   })
+  const [status, setStatus] = useState({ sending: false, success: null, message: '' })
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -21,9 +22,12 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    // Add your form submission logic here
-    setFormData({ name: '', email: '', subject: '', message: '' })
+    // Simulate async form submission — replace with your endpoint
+    setStatus({ sending: true, success: null, message: '' })
+    setTimeout(() => {
+      setStatus({ sending: false, success: true, message: 'Message sent. Thank you!' })
+      setFormData({ name: '', email: '', subject: '', message: '' })
+    }, 800)
   }
 
   return (
@@ -72,12 +76,13 @@ const Contact = () => {
             </div>
           </div>
 
-          <form className="contact-form stagger-item" onSubmit={handleSubmit}>
+          <form className="contact-form stagger-item" onSubmit={handleSubmit} aria-live="polite">
             <div className="form-group">
               <input
                 type="text"
                 name="name"
                 placeholder="Your Name"
+                aria-label="Your name"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -118,6 +123,12 @@ const Contact = () => {
             </div>
 
             <button type="submit" className="submit-btn">Send Message</button>
+              {status.success && (
+                <div className="form-status success" role="status" aria-live="polite">{status.message}</div>
+              )}
+              {status.sending && (
+                <div className="form-status sending" role="status" aria-live="polite">Sending...</div>
+              )}
           </form>
         </div>
       </div>

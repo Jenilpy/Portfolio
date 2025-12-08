@@ -36,6 +36,18 @@
   transition: color 0.25s;
 }
 
+/* Focus styles for keyboard users */
+.navigation-menu ul li button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* Prevent active spark element from capturing pointer events */
+.navigation-menu .active-element {
+  pointer-events: none;
+}
+
 .navigation-menu ul li:not(.active):hover button {
   text-shadow: 0 0 10px var(--sparkle-color), 0 0 20px var(--sparkle-color);
 }

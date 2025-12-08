@@ -188,6 +188,20 @@
   transform: translateY(-1px);
 }
 
+.form-status {
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.form-status.success {
+  color: var(--accent);
+}
+
+.form-status.sending {
+  color: var(--muted);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .contact-section {

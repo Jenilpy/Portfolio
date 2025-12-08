@@ -1,8 +1,8 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
 import './Navbar.css';
 
-const SparkleNavbar = ({ items, color = '#00fffc' }) => {
+const SparkleNavbar = ({ items, color = '#703be7' }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const navRef = useRef(null);
@@ -198,6 +198,31 @@ const SparkleNavbar = ({ items, color = '#00fffc' }) => {
     });
   };
 
+  // Keyboard navigation for accessibility
+  const handleKeyDown = useCallback(
+    (e, index) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleClick(index);
+      }
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        const next = (index + 1) % items.length;
+        buttonRefs.current[next]?.focus();
+        handleClick(next);
+      }
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const prev = (index - 1 + items.length) % items.length;
+        buttonRefs.current[prev]?.focus();
+        handleClick(prev);
+      }
+    },
+    [handleClick, items]
+  );
+
   return (
     <nav
       className="navigation-menu"
@@ -210,14 +235,17 @@ const SparkleNavbar = ({ items, color = '#00fffc' }) => {
         '--sparkle-color-80': color + 'CC',
       }}
     >
-      <ul>
+      <ul role="menubar" aria-label="Primary Navigation">
         {items.map((item, index) => (
-          <li key={item} className={index === activeIndex ? 'active' : ''}>
+          <li key={item} role="none" className={index === activeIndex ? 'active' : ''}>
             <button
+              role="menuitem"
+              aria-current={index === activeIndex ? 'true' : undefined}
               ref={(el) => {
                 buttonRefs.current[index] = el;
               }}
               onClick={() => handleClick(index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
               className="text-foreground"
             >
               {item}

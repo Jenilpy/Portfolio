@@ -54,8 +54,8 @@ const Hero = () => {
             Crafting <span className="highlight">user-centered </span>, websites with a balance of <span className="highlight">creativity</span> & <span className="highlight">precision.</span>
           </p>
           <div className="hero-action-buttons">
-            <button className="glow-on-hover">Contact me</button>
-            <button className="glow-on-hover">Download CV</button>
+            <button className="glow-on-hover" aria-label="Contact me">Contact me</button>
+            <button className="glow-on-hover" aria-label="Download CV">Download CV</button>
           </div>
         </div>
       </div>

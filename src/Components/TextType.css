@@ -6,14 +6,14 @@
 .text-type__content {
   display: inline;
   font-weight: 600;
-  color: #ffa500;
+  color: var(--accent, #ffa500);
 }
 
 .text-type__cursor {
   margin-left: 0.25rem;
   display: inline-block;
   opacity: 1;
-  color: #ffa500;
+  color: var(--accent, #ffa500);
   font-weight: bold;
 }
 

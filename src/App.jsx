@@ -12,7 +12,7 @@ function App() {
  
   return (
     <>
-    <SparkleNavbar items={['Home', 'About', 'Skills', 'Projects', 'Contact']} color="#0000ff" />
+    <SparkleNavbar items={['Home', 'About', 'Skills', 'Projects', 'Contact']} />
     <main style={{ paddingTop: '84px' }}>
       <Hero/>
       <About/>

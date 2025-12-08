@@ -59,7 +59,6 @@ const Projects = () => {
       <div className="projects-container">
         <h2 className="section-title"> Projects</h2>
         <div className="section-divider"></div>
-
         <div className="projects-grid">
           {filteredProjects.map((project, idx) => (
             <div key={project.id} className="project-card stagger-item" style={{ animationDelay: `${idx * 0.1}s` }}>
